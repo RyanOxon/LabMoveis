@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class Clientes extends StatefulWidget {
   const Clientes({super.key});
@@ -20,7 +18,29 @@ class _ClientesState extends State<Clientes> {
       body: Container(
         margin: const EdgeInsets.all(10),
         child: Column(
-          children: [],
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Image.asset(
+                  "images/detalhe_cliente.png",
+                  scale: 0.7,
+                ),
+                const Padding(padding: EdgeInsets.only(left: 10)),
+                const Text(
+                  "Clientes",
+                  style: TextStyle(fontSize: 20),
+                )
+              ],
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 10)),
+            Image.asset("images/cliente1.png"),
+            const Text("Empresa de software"),
+            const Padding(padding: EdgeInsets.only(bottom: 10)),
+            Image.asset("images/cliente2.png"),
+            const Text("Empresa de auditoria")
+          ],
         ),
       ),
     );

@@ -25,25 +25,27 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Padding(padding: EdgeInsets.only(bottom: 30)),
-            Image.asset(
-              "images/logo.png",
-            ),
+            Image.asset("images/logo.png"),
             const Padding(padding: EdgeInsets.all(50)),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Empresa()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Empresa()));
                   },
                   child: Image.asset("images/menu_empresa.png"),
                 ),
                 const Padding(padding: EdgeInsets.only(left: 20)),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Servico()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Servico()));
                   },
                   child: Image.asset("images/menu_servico.png"),
                 ),
@@ -55,16 +57,20 @@ class _HomeState extends State<Home> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Clientes()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Clientes()));
                   },
                   child: Image.asset("images/menu_cliente.png"),
                 ),
                 const Padding(padding: EdgeInsets.only(left: 20)),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Contato()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Contato()));
                   },
                   child: Image.asset("images/menu_contato.png"),
                 ),
