@@ -39,9 +39,11 @@ class _HomeState extends State<Home> {
           child: Container(
             margin: const EdgeInsets.all(15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
                   "images/logo.png",
+                  width: 300,
                 ),
                 const Padding(padding: EdgeInsets.only(top: 150)),
                 TextButton(

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'home.dart';
-
 class Resultado extends StatefulWidget {
-  String imagemApp;
-  String textoResultado;
-  Resultado(this.imagemApp, this.textoResultado, {super.key});
+  final String imagemApp;
+  final String textoResultado;
+  const Resultado(this.imagemApp, this.textoResultado, {super.key});
   @override
   State<Resultado> createState() => _ResultadoState();
 }
@@ -37,10 +35,7 @@ class _ResultadoState extends State<Resultado> {
                 const Padding(padding: EdgeInsets.only(top: 80)),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Home()));
+                      Navigator.pop(context);
                     },
                     style: TextButton.styleFrom(
                         fixedSize: const Size(200, 75),
