@@ -66,33 +66,29 @@ class _CampeonatoState extends State<Campeonato> {
                                   child: CircularProgressIndicator());
                             } else if (snapshot.hasData) {
                               final data = json.decode(snapshot.data!);
-                              return Column(
+                              return Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Image.network(
-                                        data["logo"],
-                                        height: 150,
-                                      ),
-                                      Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                                width: 250,
-                                                child: Text("${data["nome"]}",
-                                                    style: const TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold))),
-                                            Text(
-                                                "Edição: ${data["edicao_atual"]["temporada"]}"),
-                                            Text(data["rodada_atual"] == null
-                                                ? "rodada: Sem rodada atual"
-                                                : "rodada: ${data["rodada_atual"]["nome"]}"),
-                                          ])
-                                    ],
-                                  )
+                                  Image.network(
+                                    data["logo"],
+                                    height: 150,
+                                  ),
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                            width: 250,
+                                            child: Text("${data["nome"]}",
+                                                style: const TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold))),
+                                        Text(
+                                            "Edição: ${data["edicao_atual"]["temporada"]}"),
+                                        Text(data["rodada_atual"] == null
+                                            ? "rodada: Sem rodada atual"
+                                            : "rodada: ${data["rodada_atual"]["nome"]}"),
+                                      ])
                                 ],
                               );
                             }

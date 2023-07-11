@@ -16,8 +16,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String api = "https://api.api-futebol.com.br/v1";
-  String apikey = "test_04601cb9d9a690a4b4b179eab92752";
-  //String apikey = "live_2dfbd46a925089a47c3df56af54f1d  ";
+  //String apikey = "test_04601cb9d9a690a4b4b179eab92752";
+  String apikey = "live_2dfbd46a925089a47c3df56af54f1d  ";
 
   Future<String> getLista() async {
     String url = "$api/campeonatos";
@@ -29,7 +29,6 @@ class _HomeState extends State<Home> {
       "Authorization": "Bearer $apikey",
       //HttpHeaders.authorizationHeader: "Bearer $apikey",
     });
-    print(response.body);
     return response.body;
   }
 

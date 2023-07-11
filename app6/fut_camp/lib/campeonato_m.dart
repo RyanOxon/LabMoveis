@@ -16,6 +16,8 @@ class CampeonatoM extends StatefulWidget {
 }
 
 class _CampeonatoMState extends State<CampeonatoM> {
+  int primeiraFase = 0;
+  dynamic fase;
   Future<String> getComp() async {
     String url = "${widget.api}/campeonatos/${widget.id}";
 
@@ -25,112 +27,99 @@ class _CampeonatoMState extends State<CampeonatoM> {
       "Authorization": "Bearer ${widget.apikey}",
       //HttpHeaders.authorizationHeader: "Bearer $apikey",
     });
-
-    return response.body;
-  }
-
-  Future<String> getFase() async {
-    String url = "${widget.api}/campeonatos/${widget.id}/fases";
-
-    http.Response response;
-    response = await http.get(Uri.parse(url), headers: {
+    int fases = json.decode(response.body)["fases"][0]["fase_id"];
+    String url2 = "${widget.api}/campeonatos/${widget.id}/fases/$fases";
+    http.Response response2;
+    response2 = await http.get(Uri.parse(url2), headers: {
       "content-type": "application/json",
       "Authorization": "Bearer ${widget.apikey}",
       //HttpHeaders.authorizationHeader: "Bearer $apikey",
     });
-
+    fase = json.decode(response2.body);
+    print("----=-=-=-=-=------");
     print(response.body);
+    print("----=-=-=-=-=------");
+    print(fase);
     return response.body;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Info Campeonato"),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(2),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  width: 400,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 59, 255, 173),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: FutureBuilder(
-                      future: getComp(),
-                      builder: ((context, snapshot) {
-                        if (snapshot.hasError) {
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        } else if (snapshot.hasData) {
-                          final data = json.decode(snapshot.data!);
-                          return Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Image.network(
-                                    data["logo"],
-                                    height: 150,
-                                  ),
-                                  Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                            width: 250,
-                                            child: Text("${data["nome"]}",
-                                                style: const TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold))),
-                                        Text(
-                                            "Edição: ${data["edicao_atual"]["temporada"]}"),
-                                        Text(
-                                            "fase: ${data["fase_atual"]["nome"]}")
-                                      ])
-                                ],
-                              )
-                            ],
-                          );
-                        }
-                        return const Text("Erro ao carregar a lista");
-                      }))),
-              const Padding(padding: EdgeInsets.all(3)),
-              const Text("Lista de Times"),
-              FutureBuilder(
-                future: getFase(),
-                builder: ((context, snapshot) {
-                  if (snapshot.hasError) {
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasData) {
-                    final data = json.decode(snapshot.data!);
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: data["fases"].length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text("${data["fases"][index]["nome"]}"),
-                          subtitle: Text(
-                              "Rodada Atual: ${data["fases"][index]["rodada_atual"]}"),
-                        );
-                      },
-                    );
-                  }
-                  return const Text("Erro ao carregar a lista");
-                }),
-              ),
-            ],
-          ),
+        appBar: AppBar(
+          title: const Text("Info Campeonato"),
         ),
-      ),
-    );
+        body: FutureBuilder(
+            future: getComp(),
+            builder: ((context, snapshot) {
+              if (snapshot.hasError) {
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasData) {
+                final data = json.decode(snapshot.data!);
+                return SingleChildScrollView(
+                  child: Container(
+                    margin: const EdgeInsets.all(2),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 400,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 59, 255, 173),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              Image.network(
+                                data["logo"],
+                                height: 150,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 250,
+                                    child: Text(
+                                      "${data["nome"]}",
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                      "Edição: ${data["edicao_atual"]["temporada"]}"),
+                                  Text(data["rodada_atual"] == null
+                                      ? "rodada: Sem rodada atual"
+                                      : "rodada: ${data["rodada_atual"]["nome"]}"),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: fase["chaves"].length,
+                            itemBuilder: ((context, index) {
+                              return Container(
+                                  margin: const EdgeInsets.all(2),
+                                  child: Row(children: [
+                                    Text(
+                                      fase["chaves"][index]["partida_ida"]
+                                          ["time_mandante"]["nome_popular"],
+                                    ),
+                                    Text(
+                                      fase["chaves"][index]["partida_ida"]
+                                          ["time_visitante"]["nome_popular"],
+                                    ),
+                                  ]));
+                            }))
+                      ],
+                    ),
+                  ),
+                );
+              }
+              return const Text("erro");
+            })));
   }
 }
