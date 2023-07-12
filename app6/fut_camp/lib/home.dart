@@ -16,8 +16,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String api = "https://api.api-futebol.com.br/v1";
-  //String apikey = "test_04601cb9d9a690a4b4b179eab92752";
-  String apikey = "live_2dfbd46a925089a47c3df56af54f1d  ";
+  String apikey = "test_04601cb9d9a690a4b4b179eab92752";
+  //String apikey = "live_2dfbd46a925089a47c3df56af54f1d  ";
 
   Future<String> getLista() async {
     String url = "$api/campeonatos";
@@ -35,6 +35,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 246),
       appBar: AppBar(title: const Text("Futebol")),
       body: SingleChildScrollView(
           child: Column(

@@ -1,7 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'Infotime.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 
 class Campeonato extends StatefulWidget {
@@ -24,7 +28,8 @@ class _CampeonatoState extends State<Campeonato> {
       "Authorization": "Bearer ${widget.apikey}",
       //HttpHeaders.authorizationHeader: "Bearer $apikey",
     });
-
+    print(response.body);
+    print("----=-=-=-=-=------");
     return response.body;
   }
 
@@ -37,13 +42,15 @@ class _CampeonatoState extends State<Campeonato> {
       "Authorization": "Bearer ${widget.apikey}",
       //HttpHeaders.authorizationHeader: "Bearer $apikey",
     });
-    //print(response.body);
+    print(response.body);
+    print("----=-=-=-=-=------");
     return response.body;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 246),
         appBar: AppBar(title: const Text("Info Campeonato")),
         body: SingleChildScrollView(
           child: Container(
@@ -51,11 +58,8 @@ class _CampeonatoState extends State<Campeonato> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                       width: 400,
-                      decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 59, 255, 173),
-                          borderRadius: BorderRadius.circular(10)),
                       child: FutureBuilder(
                           future: getComp(),
                           builder: ((context, snapshot) {
@@ -121,38 +125,47 @@ class _CampeonatoState extends State<Campeonato> {
                                       children: [
                                         const Padding(
                                             padding: EdgeInsets.all(5)),
-                                        Container(
-                                          height: 50,
-                                          width: 163,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              color: const Color.fromARGB(
-                                                  255, 255, 255, 186),
-                                              borderRadius:
-                                                  BorderRadius.circular(50)),
-                                          child: Row(
-                                            children: [
-                                              const Padding(
-                                                  padding: EdgeInsets.all(5)),
-                                              Text("${data[index]["posicao"]}:",
-                                                  style: const TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              const Padding(
-                                                  padding: EdgeInsets.all(5)),
-                                              SizedBox(
-                                                width: 115,
-                                                child: Text(
-                                                    data[index]["time"]
-                                                        ["nome_popular"],
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              )
-                                            ],
-                                          ),
-                                        )
+                                        GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Infotime(data[index]),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              height: 50,
+                                              width: 163,
+                                              alignment: Alignment.center,
+                                              child: Row(
+                                                children: [
+                                                  const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(5)),
+                                                  Text(
+                                                      "${data[index]["posicao"]}:",
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(5)),
+                                                  SizedBox(
+                                                    width: 115,
+                                                    child: Text(
+                                                        data[index]["time"]
+                                                            ["nome_popular"],
+                                                        style: const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                  )
+                                                ],
+                                              ),
+                                            ))
                                       ]);
                                 },
                                 shrinkWrap: true,
