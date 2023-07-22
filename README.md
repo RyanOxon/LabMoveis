@@ -13,4 +13,4 @@ App 5 > Aplicativo de Calculadora Hexadecimal, com entradas pela tela ou pelo te
 
 App 6 > Aplicativo de informacoes sobre futebol, utilizando a API-Futebol
 
-App Final > Aplicativo de catalogo de filmes, com funcoes de login para salvar preferencias e filmes favoritos. Utilizando cookies para persistencia de informacao
+App Final > Aplicativo de catalogo de videos com sistema simples de login e cadastro, Sistema ja vem com uma base de informacoes de videos podendo ser filme ou serie, e estando logando voce pode adicionar mais videos e visualizar/editar/remover os videos criados por voce
